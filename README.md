@@ -6,21 +6,17 @@ Requires Python 3.11+ and uses the standard library with no runtime dependencies
 
 ## Installation
 
-From a clone of the standalone GitHub repository:
+Install from [PyPI](https://pypi.org/project/gramix-api/):
+
+```bash
+python -m pip install gramix-api
+```
+
+Alternatively, install from a local clone of the standalone GitHub repository:
 
 ```bash
 python -m pip install .
 ```
-
-Once the `v1.0.0` tag is published, install that release directly (requires Git):
-
-```bash
-python -m pip install "gramix-api @ git+https://github.com/gramix-io/gramix-python-sdk.git@v1.0.0"
-```
-
-Alternatively, install the wheel attached to a GitHub Release with
-`python -m pip install ./gramix_api-1.0.0-py3-none-any.whl`.
-PyPI installation is available only after a separate PyPI publication.
 
 ## Quick start
 
