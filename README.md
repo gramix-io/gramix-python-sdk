@@ -1,7 +1,8 @@
-# Gramix API client for Python (Unofficial Fragment API)
+# Gramix Python SDK
 
-A synchronous, fully typed client requiring Python 3.11+. It uses the standard
-library and has no runtime dependencies.
+A synchronous, fully typed client for the [Gramix.io](https://gramix.io/)
+reseller API. See the [API documentation](https://gramix.io/resellers/api/documentation).
+Requires Python 3.11+ and uses the standard library with no runtime dependencies.
 
 ## Installation
 
