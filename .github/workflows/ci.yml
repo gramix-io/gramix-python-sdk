@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    branches: [main]
+    tags: ["v*"]
   pull_request:
 
 permissions:
@@ -41,6 +43,22 @@ jobs:
         with:
           python-version: "3.14"
       - run: python -m pip install ".[dev]"
+      - name: Check release tag matches package version
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          import gramix
+
+          tag = os.environ["RELEASE_TAG"]
+          if not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", tag):
+              raise SystemExit(f"Release tag must be vMAJOR.MINOR.PATCH: {tag}")
+          if tag != f"v{gramix.__version__}":
+              raise SystemExit(f"Tag {tag} does not match package version {gramix.__version__}")
+          PY
       - run: python -m ruff check .
       - run: python -m ruff format --check .
       - run: python -m mypy src/gramix tests
@@ -57,3 +75,28 @@ jobs:
           name: python-distributions
           path: dist/*
           if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test, package]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Ensure tagged commit is on main
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-distributions
+          path: dist
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.whl dist/*.tar.gz \
+            --verify-tag \
+            --title "Gramix Python SDK $GITHUB_REF_NAME" \
+            --generate-notes

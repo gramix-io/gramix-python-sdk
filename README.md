@@ -187,6 +187,21 @@ Tests use fixtures and a local HTTP server; they require no API key and create
 no real purchases. CI tests Python 3.11–3.14 on Linux and 3.11/3.14 on Windows
 and macOS, and checks typing, lint, formatting, and distributable artifacts.
 
+## Releases
+
+Update `src/gramix/_version.py` and `CHANGELOG.md`, then push the commit to
+`main`. Once CI passes, create and push a matching version tag (for example,
+`v1.0.0`):
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The tag workflow checks the package version and runs the full CI matrix. If all
+jobs pass, it publishes a GitHub Release with the wheel and source distribution
+attached. A failed job does not publish a release. This does not upload to PyPI.
+
 ## License
 
 [MIT](./LICENSE), copyright Gramix.io. Commercial use, modification, and
