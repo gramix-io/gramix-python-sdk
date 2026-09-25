@@ -2,7 +2,7 @@
 
 All notable changes to this package will be documented here.
 
-## 1.0.0 - Unreleased
+## 1.0.0 - 2026-09-25
 
 - Publish under MIT with metadata for gramix-io/gramix-python-sdk.
 - Validate decimal amounts, ISO timestamps, pagination bounds, and response status.
