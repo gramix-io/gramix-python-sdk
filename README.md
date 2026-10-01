@@ -1,4 +1,4 @@
-# Gramix Python SDK
+# Gramix Python SDK (Fragment API Unofficial)
 
 A synchronous, fully typed client for the [Gramix.io](https://gramix.io/)
 reseller API. See the [API documentation](https://gramix.io/resellers/api/documentation).
